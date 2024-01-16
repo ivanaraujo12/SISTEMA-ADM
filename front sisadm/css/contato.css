@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300&display=swap');
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0,0.1);
+} 
+
+
+nav.menu-lateral{
+  width: 80px;
+  height: 100%;
+  background-color: rgb(53, 53, 181);
+  padding: 40px 0 40px 1%;
+  box-shadow: 3px 0 0 rgb(255, 234, 0);
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  transition: .5s;
+}
+
+
+nav.menu-lateral.expandir{
+  width: 300px;
+}
+
+
+
+.btn-expandir{
+  width: 100%;
+  padding-left: 10px;
+
+}
+
+
+.btn-expandir > i{
+  color: white;
+  font-size: 35px;
+  cursor: pointer;
+
+}
+
+
+ul{
+  height: 100%;
+  list-style-type: none;
+}
+
+
+ul li.item-menu{
+  transition: .2s;
+}
+
+ul li.ativo{
+  background-color: rgb(255, 234, 0);
+}
+
+
+
+
+ul li.item-menu:hover{
+background: rgb(255, 234, 0);
+
+}
+
+
+ul li.item-menu a:hover{
+color: rgb(53, 53, 181);
+}
+
+
+ul li.item-menu a{
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  padding: 20px 4%;
+  display: flex;
+  margin-bottom: 20px;
+  line-height: 40px;
+}
+
+
+ul li.item-menu a .txt-link{
+  margin-left: 70px;
+  transition: .5s;
+  opacity: 0;
+}
+
+
+
+nav.menu-lateral.expandir .txt-link{
+  margin-left: 40px;
+  opacity: 1;
+
+}
+
+
+ul li.item-menu a .icon > i{
+  font-size: 30px;
+  margin-left: 10px;
+}
+
+
+body[page=lista] #listaRegistros,
+body[page=cadastro] #cadastroRegistro {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+#listaRegistros {
+    display: none;
+    margin-top: 20px;
+}
+
+#cadastroRegistro {
+    display: none;
+    flex-direction: column;
+    gap: 30px;
+}
+
+body[page=lista] #listaRegistros {
+    display: block;
+}
+
+body[page=cadastro] #cadastroRegistro {
+    display: flex;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th,
+table td {
+    font-size: 14px;
+    padding: 12px;
+    border: solid 1px #ccc;
+}
+
+button {
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #07a;
+    color: #fff;
+    padding: 12px;
+}
+
+button.cinza {
+    background-color: #ccc;
+    color: #666;
+}
+
+button.vermelho {
+    background-color: #a00;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+input {
+    border: solid 1px #ccc;
+    border-radius: 4px;
+    padding: 12px;
+}
+
+.label>div {
+    display: flex;
+}
+
+.label>div>input {
+    flex: 1;
+}

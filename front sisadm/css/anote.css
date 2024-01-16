@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 10px; 
+  color: rgb(53, 53, 181);
+}
+
+.anota {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.1);
+} 
+
+nav.menu-lateral {
+  width: 80px;
+  height: 100%;
+  background-color: rgb(53, 53, 181);
+  padding: 40px 0 40px 1%;
+  box-shadow: 3px 0 0 rgb(255, 234, 0);
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  transition: .5s;
+}
+
+nav.menu-lateral.expandir {
+  width: 300px;
+}
+
+.btn-expandir {
+  width: 100%;
+  padding-left: 10px;
+}
+
+.btn-expandir > i {
+  color: white;
+  font-size: 35px;
+  cursor: pointer;
+}
+
+ul {
+  height: 100%;
+  list-style-type: none;
+}
+
+ul li.item-menu {
+  transition: .2s;
+}
+
+ul li.ativo {
+  background-color: rgb(255, 234, 0);
+}
+
+ul li.item-menu:hover {
+  background: rgb(255, 234, 0);
+}
+
+ul li.item-menu a:hover {
+  color: rgb(53, 53, 181);
+}
+
+ul li.item-menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  padding: 20px 4%;
+  display: flex;
+  margin-bottom: 20px;
+  line-height: 40px;
+}
+
+ul li.item-menu a .txt-link {
+  margin-left: 70px;
+  transition: .5s;
+  opacity: 0;
+}
+
+nav.menu-lateral.expandir .txt-link {
+  margin-left: 40px;
+  opacity: 1;
+}
+
+ul li.item-menu a .icon > i {
+  font-size: 30px;
+  margin-left: 10px;
+}
+
+.notes {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  flex-direction: row-reverse;
+  justify-content: center;
+  margin-bottom: 9vh;
+}
+
+/* Section Add Note */
+.add_note_article {
+  background-color: rgb(53, 53, 181);
+  width: 50vw;
+  height: 40vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+}
+
+.add_note_title {
+  margin: 10px 0 5px 0;
+  height: 20%;
+  width: 85%;
+  padding-left: 8px;
+  border-radius: 20px;
+  border: 1px solid #333;
+}
+
+.add_note_text {
+  resize: none;
+  width: 85%;
+  height: 60%;
+  padding: 8px;
+  border-radius: 20px;
+  border: 1px solid #333;
+  margin-bottom: 5px;
+}
+
+.add_note_title::placeholder {
+  text-align: center;
+}
+
+.add_note_text::placeholder {
+  text-align: center;
+  padding-top: 5px;
+  font-size: 15px;
+}
+
+.add_note_btn,
+.delete_all_note_btn {
+  overflow: hidden;
+  margin: 3px;
+  width: 85%;
+  height: 20%;
+  border-radius: 10px;
+  border: 1px solid #333;
+  transition: 0.5s;
+  cursor: pointer;
+  background: rgb(255, 234, 0);
+  color: rgb(53, 53, 181);
+  font-weight: bold;
+}
+
+.add_note_btn:hover {
+  background: rgb(52, 205, 131);
+  color: #fff;
+}
+
+.delete_all_note_btn {
+  background-color: #f44;
+  color: #eee;
+  font-weight: bold;
+  margin-bottom: 8px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.delete_all_note_btn:hover {
+  background: rgb(202, 48, 48);
+}
+
+/* Finish Section Add Note */
+
+/* Section your notes*/
+.your_note {
+  background-color: #fff;
+  width: 20vw;
+  height: 30vh;
+  margin: 10px 0 10px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  border-radius: 20px;
+}
+
+.your_note input {
+  margin: 10px 15px 5px 0;
+  height: 20%;
+  width: 85%;
+  padding-left: 8px;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 2px solid #000;
+}
+
+.your_note textarea {
+  resize: none;
+  border: none;
+  margin-right: 15px;
+  width: 85%;
+  height: 60%;
+  padding: 8px;
+  border-radius: 20px;
+  margin-bottom: 5px;
+}
+
+div {
+  overflow: hidden;
+  margin: 3px;
+}
+
+.your_note img {
+  width: 1.8em;
+  height: 1.8em;
+  margin-right: 5px;
+}
+
+.delete_note_btn {
+  overflow: hidden;
+  margin: 3px;
+  width: 85%;
+  height: 20%;
+  border-radius: 10px;
+  border: 1px solid #333;
+  transition: 0.5s;
+  cursor: pointer;
+  background: #f44;
+  color: #eee;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.delete_note_btn:hover {
+  background: rgb(202, 48, 48);
+}
+
+footer {
+  display: inline-block;
+  margin-top: 10px;
+  position: fixed;
+  bottom: 0;
+  height: 8vh;
+  width: 100vw;
+  background-color: #555;
+  margin-bottom: -4px;
+}
+
+.copyright {
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 15px;
+}

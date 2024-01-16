@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/financa.css">
+  <title>Financeiro</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+  <nav class="menu-lateral">
+    <div class="btn-expandir">
+      <i class="bi bi-list" id="btn-exp"></i>
+    </div> <!--btn-expandir-->
+
+    <ul>
+      <li class="item-menu ativo">
+          <a href="estoque.html">
+              <span class="icon"><i class="bi bi-box2"></i></span>
+              <span class="txt-link">Estoque</span>
+          </a>
+      </li>
+      <li class="item-menu">
+          <a href="financeiro.html">
+              <span class="icon"><i class="bi bi-cash-coin"></i></span>
+              <span class="txt-link">Financeiro</span>
+          </a>
+      </li>
+      <li class="item-menu">
+          <a href="contato.html">
+              <span class="icon"><i class="bi bi-person-lines-fill"></i></span>
+              <span class="txt-link">Contatos</span>
+          </a>
+      </li>
+      <li class="item-menu">
+          <a href="anotacao.html">
+              <span class="icon"><i class="bi bi-journal"></i></span>
+              <span class="txt-link">Anotações</span>
+          </a>
+      </li>
+  </ul>
+  </nav><!--menu-lateral-->
+
+  <main>
+    <div class="resume">
+      <div>
+        Entradas: R$
+        <span class="incomes">0.00</span>
+      </div>
+      <div>
+        Saídas: R$
+        <span class="expenses">0.00</span>
+      </div>
+      <div>
+        Total: R$
+        <span class="total">0.00</span>
+      </div>
+    </div>
+    <div class="newItem">
+      <div class="divDesc">
+        <label for="desc">Descrição</label>
+        <input type="text" id="desc" />
+      </div>
+      <div class="divAmount">
+        <label for="amount">Valor</label>
+        <input type="number" id="amount" />
+      </div>
+      <div class="divType">
+        <label for="type">Tipo</label>
+        <select id="type">
+          <option>ENTRADA</option>
+          <option>SAIDA</option>
+        </select>
+      </div>
+      <button onclick="salvar()">Incluir</button>
+    </div>
+    <div class="divTable">
+      <table>
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th class="columnAmount">Valor</th>
+            <th class="columnType">Tipo</th>
+            <th class="columnAction"></th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    async function fetchItems() {
+      try {
+        const response = await fetch('http://localhost:3333/financeiro');
+        const data = await response.json();
+        return data.content ?? [];
+      } catch (error) {
+        console.error('Erro ao buscar itens:', error);
+        return [];
+      }
+    }
+
+    // Função para carregar os itens
+    async function loadItens() {
+      const tbody = document.querySelector("tbody");
+      const incomes = document.querySelector(".incomes");
+      const expenses = document.querySelector(".expenses");
+      const total = document.querySelector(".total");
+
+      const items = await fetchItems();
+      tbody.innerHTML = "";
+
+      items.forEach((item, index) => {
+        insertItem(item, index);
+      });
+
+      getTotals();
+
+      function insertItem(item, index) {
+        let tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td>${item.description}</td>
+          <td>R$ ${item.value.toFixed(2)}</td>
+          <td class="columnType">${item.stock === "ENTRADA"
+            ? '<i class="bx bxs-chevron-up-circle"></i>'
+            : '<i class="bx bxs-chevron-down-circle"></i>'
+          }</td>
+          <td class="columnAction">
+            <button onclick="deleteItem(${item.id})"><i class='bx bx-trash'></i></button>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      }
+
+      function getTotals() {
+        const amountIncomes = items
+          .filter((item) => item.stock === "ENTRADA")
+          .map((transaction) => Number(transaction.value));
+
+        const amountExpenses = items
+          .filter((item) => item.stock === "SAIDA")
+          .map((transaction) => Number(transaction.value));
+
+        const totalIncomes = amountIncomes
+          .reduce((acc, cur) => acc + cur, 0)
+          .toFixed(2);
+
+        const totalExpenses = Math.abs(
+          amountExpenses.reduce((acc, cur) => acc + cur, 0)
+        ).toFixed(2);
+
+        const totalItems = (totalIncomes - totalExpenses).toFixed(2);
+
+        incomes.innerHTML = totalIncomes;
+        expenses.innerHTML = totalExpenses;
+        total.innerHTML = totalItems;
+      }
+    }
+
+    // Função para deletar um item da API
+    async function deleteItem(id) {
+      try {
+        const response = await fetch(`http://localhost:3333/financeiro/${id}`, {
+          method: 'DELETE',
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erro ao deletar o item (status ${response.status})`);
+        }
+
+        console.log('Item deletado com sucesso:', id);
+
+        // Recarrega os itens após a deleção
+        loadItens();
+      } catch (error) {
+        console.error('Erro ao deletar o item:', error);
+      }
+    }
+    async function salvar() {
+      let descricao = document.getElementById('desc').value;
+      let valor = document.getElementById('amount').value;
+      valor = parseInt(valor);
+      let select = document.getElementById('type').value;
+
+      // Convertendo o valor para string
+      descricao = String(descricao);
+
+      // Verificando se os campos obrigatórios estão preenchidos
+      if (!descricao || !valor || !select) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+      }
+
+      var data = {
+        description: descricao,
+        value: valor,
+        stock: select
+      }
+
+      try {
+        const response = await fetch('http://localhost:3333/financeiro', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+          throw new Error('Erro ao salvar o item');
+        }
+
+        // Recarrega os itens após a inclusão
+        loadItens();
+
+        console.log('Sucesso:', data);
+        alert('Sucesso');
+      } catch (error) {
+        console.error('Erro:', error);
+      }
+    }
+
+    loadItens();
+  </script>
+
+
+</body>
+
+</html>
